@@ -1,0 +1,83 @@
+name: Build and Release Plugin
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build_and_release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Build Plugin
+              run: npm run build
+
+            - name: Extract Plugin Info
+              id: plugin_info
+              run: |
+                  plugin_version=$(jq -r '.plugin_version' plugin_info.json)
+                  asset_name=$(jq -r '.asset_name' plugin_info.json)
+                  plugin_info=$(cat plugin_info.json)
+
+                  echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
+                  echo "ASSET_NAME=$asset_name" >> $GITHUB_ENV
+                  echo "PLUGIN_INFO<<EOF" >> $GITHUB_ENV
+                  echo "$plugin_info" >> $GITHUB_ENV
+                  echo "EOF" >> $GITHUB_ENV
+
+            - name: Create ZIP Package
+              run: |
+                  mkdir -p release
+                  cd dist && zip -r "../release/${{ env.ASSET_NAME }}" . && cd ..
+                  if [ -f "release/${{ env.ASSET_NAME }}" ]; then
+                      zip -j -u "release/${{ env.ASSET_NAME }}" plugin_info.json
+                  else
+                      echo "ZIP file not found, skipping plugin_info.json addition"
+                  fi
+
+            - name: Create Git Tag
+              run: |
+                  git config --global user.name "github-actions"
+                  git config --global user.email "github-actions@github.com"
+                  git tag -a "v${{ env.PLUGIN_VERSION }}" -m "Release v${{ env.PLUGIN_VERSION }}"
+                  git push origin --tags
+
+            - name: Create GitHub Release
+              id: create_release
+              uses: ncipollo/release-action@v1
+              with:
+                  tag: v${{ env.PLUGIN_VERSION }}
+                  name: Release v${{ env.PLUGIN_VERSION }}
+                  body: |
+                      Plugin Info:
+                      ```
+                      ${{ env.PLUGIN_INFO }}
+                      ```
+                  draft: false
+                  prerelease: false
+
+            - name: Upload Release Assets (ZIP & Plugin Info)
+              uses: softprops/action-gh-release@v1
+              with:
+                  tag_name: v${{ env.PLUGIN_VERSION }}
+                  files: |
+                      release/${{ env.ASSET_NAME }}
+                      plugin_info.json
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

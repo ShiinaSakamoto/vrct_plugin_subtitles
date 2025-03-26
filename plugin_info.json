@@ -1,0 +1,9 @@
+{
+    "title": "VRCT Example Plugin",
+    "plugin_id": "vrct_plugin_template",
+    "asset_name": "vrct_plugin_template.zip",
+    "location": "main_section",
+    "plugin_version": "0.0.0",
+    "min_supported_vrct_version": "3.0.4",
+    "max_supported_vrct_version": "3.0.7"
+}
