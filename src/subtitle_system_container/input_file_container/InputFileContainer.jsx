@@ -41,8 +41,6 @@ export const InputFileContainer = () => {
         updateSubtitleCues([]);
     };
 
-    console.log("InputFileContainer styles:", styles);
-
     return (
         <div className={styles.container}>
             <div className={styles.input_file_wrapper}>
