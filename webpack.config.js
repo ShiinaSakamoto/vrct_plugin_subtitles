@@ -3,6 +3,8 @@ import { fileURLToPath } from "url";
 import TerserPlugin from "terser-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
+import { configs } from "./plugin_configs.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -18,7 +20,7 @@ export default {
         module: true,
     },
     externals: {
-        react: "root React", // react をグローバルオブジェクトにマッピング
+        react: "root React",
         clsx: "root clsx",
     },
     experiments: {
@@ -81,5 +83,13 @@ export default {
     ],
     resolve: {
         extensions: [".js", ".jsx"],
+        alias: {
+            ...Object.fromEntries(
+                Object.entries(configs.alias).map(([alias_key, alias_path]) => [
+                    alias_key,
+                    path.resolve(__dirname, "src", alias_path)
+                ])
+            ),
+        },
     },
 };
