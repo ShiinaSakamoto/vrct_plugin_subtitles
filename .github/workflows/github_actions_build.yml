@@ -31,9 +31,9 @@ jobs:
             - name: Extract Plugin Info
               id: plugin_info
               run: |
-                  plugin_version=$(jq -r '.plugin_version' plugin_info.json)
-                  asset_name=$(jq -r '.asset_name' plugin_info.json)
-                  plugin_info=$(cat plugin_info.json)
+                  plugin_version=$(jq -r '.plugin_version' src/plugin_info.json)
+                  asset_name=$(jq -r '.asset_name' src/plugin_info.json)
+                  plugin_info=$(cat src/plugin_info.json)
 
                   echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
                   echo "ASSET_NAME=$asset_name" >> $GITHUB_ENV
@@ -46,9 +46,9 @@ jobs:
                   mkdir -p release
                   cd dist && zip -r "../release/${{ env.ASSET_NAME }}" . && cd ..
                   if [ -f "release/${{ env.ASSET_NAME }}" ]; then
-                      zip -j -u "release/${{ env.ASSET_NAME }}" plugin_info.json
+                      zip -j -u "release/${{ env.ASSET_NAME }}" src/plugin_info.json
                   else
-                      echo "ZIP file not found, skipping plugin_info.json addition"
+                      echo "ZIP file not found, skipping src/plugin_info.json addition"
                   fi
 
             - name: Create Git Tag
@@ -78,6 +78,6 @@ jobs:
                   tag_name: v${{ env.PLUGIN_VERSION }}
                   files: |
                       release/${{ env.ASSET_NAME }}
-                      plugin_info.json
+                      src/plugin_info.json
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

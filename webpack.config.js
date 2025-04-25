@@ -2,8 +2,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import TerserPlugin from "terser-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CopyPlugin from "copy-webpack-plugin";
 
-import { configs } from "./plugin_configs.js";
+import { configs } from "./src/plugin_configs.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +22,7 @@ export default {
     },
     externals: {
         react: "root React",
+        "react-i18next": "root reactI18next",
         clsx: "root clsx",
     },
     experiments: {
@@ -74,15 +76,28 @@ export default {
                     "sass-loader",
                 ],
             },
+            {
+                test: /\.ya?ml$/,
+                type: "javascript/auto",
+                use: "yaml-loader"
+            },
         ],
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: "[name].css",
         }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, "src/plugin_info.json"),
+                    to: path.resolve(__dirname, "dist/plugin_info.json"),
+                }
+            ],
+        }),
     ],
     resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", ".json", ".yml", ".yaml"],
         alias: {
             ...Object.fromEntries(
                 Object.entries(configs.alias).map(([alias_key, alias_path]) => [
