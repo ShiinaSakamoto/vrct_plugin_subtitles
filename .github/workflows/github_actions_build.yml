@@ -44,12 +44,8 @@ jobs:
             - name: Create ZIP Package
               run: |
                   mkdir -p release
-                  cd dist && zip -r "../release/${{ env.ASSET_NAME }}" . && cd ..
-                  if [ -f "release/${{ env.ASSET_NAME }}" ]; then
-                      zip -j -u "release/${{ env.ASSET_NAME }}" plugin_info.json
-                  else
-                      echo "ZIP file not found, skipping plugin_info.json addition"
-                  fi
+                  cd dist
+                  zip -r ../release/${{ env.ASSET_NAME }} .
 
             - name: Create Git Tag
               run: |
