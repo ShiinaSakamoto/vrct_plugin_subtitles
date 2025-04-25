@@ -46,9 +46,9 @@ jobs:
                   mkdir -p release
                   cd dist && zip -r "../release/${{ env.ASSET_NAME }}" . && cd ..
                   if [ -f "release/${{ env.ASSET_NAME }}" ]; then
-                      zip -j -u "release/${{ env.ASSET_NAME }}" src/plugin_info.json
+                      zip -j -u "release/${{ env.ASSET_NAME }}" plugin_info.json
                   else
-                      echo "ZIP file not found, skipping src/plugin_info.json addition"
+                      echo "ZIP file not found, skipping plugin_info.json addition"
                   fi
 
             - name: Create Git Tag
