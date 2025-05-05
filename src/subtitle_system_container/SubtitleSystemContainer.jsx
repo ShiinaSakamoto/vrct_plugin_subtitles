@@ -1,13 +1,12 @@
 import styles from "./SubtitleSystemContainer.module.scss";
+import { HeaderContainer } from "./header_container/HeaderContainer";
 import { InputFileContainer } from "./input_file_container/InputFileContainer";
 import { ModeSelectorContainer } from "./mode_selector_container/ModeSelectorContainer";
 import { PlayControlContainer } from "./play_control_container/PlayControlContainer";
 import { CountdownContainer } from "./countdown_container/CountdownContainer";
 import { SubtitlesListContainer } from "./subtitles_list_container/SubtitlesListContainer";
-import { usePluginTranslation } from "@usePluginTranslation";
 
 export const SubtitleSystemContainer = () => {
-    const { t } = usePluginTranslation();
     // const [srtContent, setSrtContent] = useState("");
     // const [cues, setCues] = useState([]);
     // const [isPlaying, setIsPlaying] = useState(false);
@@ -35,7 +34,7 @@ export const SubtitleSystemContainer = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>{t("main_page.title")}</h1>
+            <HeaderContainer />
             <InputFileContainer />
             <ModeSelectorContainer />
             <PlayControlContainer />

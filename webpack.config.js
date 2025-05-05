@@ -81,6 +81,20 @@ export default {
                 type: "javascript/auto",
                 use: "yaml-loader"
             },
+            {
+                test: /\.svg$/i,
+                resourceQuery: /react/,    // import foo.svg?react
+                issuer: /\.[jt]sx?$/,
+                use: ["@svgr/webpack"]
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                resourceQuery: { not: [/react/] },
+                type: "asset/resource",
+                generator: {
+                    filename: "assets/[name].[contenthash][ext]"
+                }
+            },
         ],
     },
     plugins: [

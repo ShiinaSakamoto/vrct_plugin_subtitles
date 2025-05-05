@@ -1,16 +1,16 @@
 {
     "title": "VRCT Subtitles",
-    "desc": "No description",
+    "desc": "(Only Japanese language supported for now)",
     "plugin_id": "vrct_plugin_subtitles",
     "asset_name": "vrct_plugin_subtitles.zip",
     "location": "main_section",
-    "plugin_version": "0.0.5",
+    "plugin_version": "0.0.6",
     "min_supported_vrct_version": "3.0.5",
     "max_supported_vrct_version": "3.0.5",
     "locales": {
         "en": {
             "title": "VRCT Subtitles",
-            "desc": "No description"
+            "desc": "(Only Japanese language supported for now)"
         },
         "ja": {
             "title": "VRCT 字幕表示機能",

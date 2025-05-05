@@ -44,7 +44,7 @@ export const InputFileContainer = () => {
     return (
         <div className={styles.container}>
             <div className={styles.input_file_wrapper}>
-                <label htmlFor="subtitle_file_input" className={styles.input_file_label}>SRT/ASSファイルを選択</label>
+                <label htmlFor="subtitle_file_input" className={styles.input_file_label}>字幕ファイルを選択</label>
                 <input
                     id="subtitle_file_input"
                     type="file"
