@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./InputFileContainer.module.scss";
+import { useStoreContext } from "@plugin_store";
 import { useSubtitles } from "../_logics/useSubtitles";
 import { parseSRT, parseASS } from "../_subtitles_utils";
 
@@ -10,6 +11,10 @@ export const InputFileContainer = () => {
         updateSubtitleCues,
         handleSubtitlesStop
     } = useSubtitles();
+    const inputRef = useRef(null);
+
+    const { useSendTextToOverlay } = useStoreContext();
+    const { sendTextToOverlay } = useSendTextToOverlay();
 
     // ファイルアップロード時の処理
     const handleFileUpload = (event) => {
@@ -28,6 +33,8 @@ export const InputFileContainer = () => {
             updateSubtitleCues(parsedCues);
             console.log("Parsed cues:", parsedCues);
             updateSubtitleFileName(file.name);
+            sendTextToOverlay(`字幕ファイル「${file.name}」を読み込みました。`);
+
 
         };
         reader.readAsText(file);
@@ -39,6 +46,9 @@ export const InputFileContainer = () => {
         handleSubtitlesStop();
         updateSubtitleFileName("ファイルが選択されていません");
         updateSubtitleCues([]);
+        if (inputRef.current) {
+            inputRef.current.value = "";
+        }
     };
 
     return (
@@ -49,6 +59,7 @@ export const InputFileContainer = () => {
                     id="subtitle_file_input"
                     type="file"
                     accept=".srt,.ass"
+                    ref={inputRef}
                     onChange={handleFileUpload}
                     className={styles.input_file_i}
                 />

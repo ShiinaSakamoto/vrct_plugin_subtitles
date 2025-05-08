@@ -2,7 +2,9 @@ const store_hooks = {};
 
 export const initStore = (createAtomWithHook) => {
     Object.assign(store_hooks, {
+        useStore_IsStarted: createAtomWithHook(false, "IsStarted", { is_state_ok: true }).useHook,
         useStore_IsSubtitlePlaying: createAtomWithHook(false, "IsSubtitlePlaying", { is_state_ok: true }).useHook,
+        useStore_IsPlayable: createAtomWithHook(false, "IsPlayable", { is_state_ok: true }).useHook,
         useStore_SubtitlePlaybackMode: createAtomWithHook("relative", "SubtitlePlaybackMode", { is_state_ok: true }).useHook,
         useStore_SubtitleAbsoluteTargetTime: createAtomWithHook({
             hour: "23",

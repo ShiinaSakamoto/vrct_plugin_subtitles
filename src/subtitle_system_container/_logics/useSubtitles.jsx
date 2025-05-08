@@ -1,10 +1,12 @@
-import { useStore, useStoreContext } from "../../store/store.js";
-
+import { useStore, useStoreContext } from "@plugin_store";
 export const useSubtitles = () => {
     const { useSendTextToOverlay } = useStoreContext();
     const { sendTextToOverlay } = useSendTextToOverlay();
 
+    const { currentIsPlayable, updateIsPlayable } = useStore("useStore_IsPlayable");
+
     const { currentSubtitleFileName, updateSubtitleFileName } = useStore("useStore_SubtitleFileName");
+    const { currentIsStarted, updateIsStarted } = useStore("useStore_IsStarted");
     const { currentIsSubtitlePlaying, updateIsSubtitlePlaying } = useStore("useStore_IsSubtitlePlaying");
     const { currentSubtitlePlaybackMode, updateSubtitlePlaybackMode } = useStore("useStore_SubtitlePlaybackMode");
     const { currentSubtitleAbsoluteTargetTime, updateSubtitleAbsoluteTargetTime } = useStore("useStore_SubtitleAbsoluteTargetTime");
@@ -81,11 +83,13 @@ export const useSubtitles = () => {
     //  字幕一覧の表示（relative モードの場合、クリックでジャンプ）
     // テーブル内の字幕行をクリック（relative モードのみ）でジャンプ
     const handleJump = (jumpCue) => {
-        if (currentSubtitlePlaybackMode.data !== "relative") return;
+        // if (currentSubtitlePlaybackMode.data !== "relative") return;
         handleSubtitlesStop();
+        updateEffectiveCountdown(null);
         const offset = -jumpCue.startTime * 1000;
         scheduleCues(offset);
         updateIsSubtitlePlaying(true);
+        updateIsStarted(true);
     };
 
 
@@ -122,7 +126,6 @@ export const useSubtitles = () => {
         // 調整値を反映した開始値
         const startValue = computedCountdown + currentCountdownAdjustment.data;
         startCountdownInterval(startValue);
-        sendTextToOverlay(startValue.toString());
     };
 
 
@@ -140,6 +143,7 @@ export const useSubtitles = () => {
         }
         console.log("再生を停止しました。");
         updateIsSubtitlePlaying(false);
+        updateIsStarted(false);
         // setInitialCountdown(null);
         updateEffectiveCountdown(null);
         updateCountdownAdjustment(0);
@@ -153,6 +157,12 @@ export const useSubtitles = () => {
 
         currentIsSubtitlePlaying,
         updateIsSubtitlePlaying,
+
+        currentIsPlayable,
+        updateIsPlayable,
+
+        currentIsStarted,
+        updateIsStarted,
 
         currentSubtitlePlaybackMode,
         updateSubtitlePlaybackMode,
