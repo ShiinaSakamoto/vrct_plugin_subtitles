@@ -14,6 +14,7 @@ export const initStore = (createAtomWithHook) => {
         useStore_CountdownAdjustment: createAtomWithHook(0, "CountdownAdjustment", { is_state_ok: true }).useHook,
         useStore_EffectiveCountdown: createAtomWithHook(null, "EffectiveCountdown", { is_state_ok: true }).useHook,
         useStore_SubtitleCues: createAtomWithHook([], "SubtitleCues", { is_state_ok: true }).useHook,
+        useStore_PlayingText: createAtomWithHook(null, "PlayingText", { is_state_ok: true }).useHook,
 
         useStore_SubtitleTimers: createAtomWithHook([], "SubtitleTimers", { is_state_ok: true }).useHook,
         useStore_SubtitleCountdownTimerId: createAtomWithHook([], "SubtitleCountdownTimerId", { is_state_ok: true }).useHook,

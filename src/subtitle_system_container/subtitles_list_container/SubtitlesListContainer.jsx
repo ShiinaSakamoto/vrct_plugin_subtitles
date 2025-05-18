@@ -9,14 +9,15 @@ export const SubtitlesListContainer = () => {
     if (currentSubtitleCues.data.length < 0 ) return null;
 
     return (
-        <div className={styles.subtitleSection}>
+        <div className={styles.subtitle_section}>
             <h2>字幕一覧</h2>
             <table className={styles.table}>
                 <thead>
                     <tr>
+                        <th></th>
                         <th>番号</th>
                         <th>開始</th>
-                        <th>終了</th>
+                        {/* <th>終了</th> */}
                         <th>Actor</th>
                         <th>テキスト</th>
                     </tr>
@@ -25,21 +26,22 @@ export const SubtitlesListContainer = () => {
                     {currentSubtitleCues.data.map((cue) => (
                         <tr
                             key={cue.index}
-                            onClick={() => handleJump(cue)}
                             className={styles.tableRow}
                         >
+                            <td
+                                className={styles.play_button_wrapper}
+                                onClick={() => handleJump(cue)}>
+                                ここから再生
+                            </td>
                             <td>{cue.index}</td>
                             <td>{formatTime(cue.startTime)}</td>
-                            <td>{formatTime(cue.endTime)}</td>
+                            {/* <td>{formatTime(cue.endTime)}</td> */}
                             <td>{cue.actor}</td>
                             <td>{cue.text}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <p className={styles.note}>
-                ※ 行をクリックすると、その字幕の位置にジャンプします。（相対モードのみ）
-            </p>
         </div>
     );
 };
