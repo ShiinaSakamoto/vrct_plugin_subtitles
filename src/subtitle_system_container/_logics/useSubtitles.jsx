@@ -5,6 +5,8 @@ export const useSubtitles = () => {
 
     const { currentIsPlayable, updateIsPlayable } = useStore("useStore_IsPlayable");
 
+    const { currentPlayingText, updatePlayingText } = useStore("useStore_PlayingText");
+
     const { currentSubtitleFileName, updateSubtitleFileName } = useStore("useStore_SubtitleFileName");
     const { currentIsStarted, updateIsStarted } = useStore("useStore_IsStarted");
     const { currentIsSubtitlePlaying, updateIsSubtitlePlaying } = useStore("useStore_IsSubtitlePlaying");
@@ -33,6 +35,7 @@ export const useSubtitles = () => {
                 send_text = `${cue.text}`;
             }
             console.log(`字幕開始 (index: ${cue.index}) send_text:${send_text}`);
+            updatePlayingText(send_text);
             sendTextToOverlay(send_text);
         };
 
@@ -145,6 +148,7 @@ export const useSubtitles = () => {
         updateIsSubtitlePlaying(false);
         updateIsStarted(false);
         // setInitialCountdown(null);
+        updatePlayingText(null);
         updateEffectiveCountdown(null);
         updateCountdownAdjustment(0);
         updateIsCuesScheduled(false);
@@ -181,6 +185,9 @@ export const useSubtitles = () => {
 
         currentSubtitleCues,
         updateSubtitleCues,
+
+        currentPlayingText,
+        updatePlayingText,
 
         handleSubtitlesStart,
         handleSubtitlesStop,

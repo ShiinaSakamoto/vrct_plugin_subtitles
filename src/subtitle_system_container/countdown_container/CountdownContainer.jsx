@@ -12,6 +12,7 @@ export const CountdownContainer = () => {
         currentSubtitlePlaybackMode,
         currentIsStarted,
         currentIsSubtitlePlaying,
+        currentPlayingText,
     } = useSubtitles();
 
     // if (currentEffectiveCountdown.data === 0) return null;
@@ -25,7 +26,12 @@ export const CountdownContainer = () => {
     }
     let label = `カウントダウン: ${count_label}`;
 
-    if (currentIsStarted.data) label = "再生中";
+    if (currentIsStarted.data) {
+        label = "再生中";
+        if (currentPlayingText.data) {
+            label = `${currentPlayingText.data}`;
+        }
+    }
 
     return (
         <div className={styles.container}>
