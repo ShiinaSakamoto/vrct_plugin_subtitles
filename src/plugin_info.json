@@ -4,9 +4,9 @@
     "plugin_id": "vrct_plugin_subtitles",
     "asset_name": "vrct_plugin_subtitles.zip",
     "location": "main_section",
-    "plugin_version": "1.0.4",
+    "plugin_version": "1.0.5",
     "min_supported_vrct_version": "3.1.0",
-    "max_supported_vrct_version": "3.1.2",
+    "max_supported_vrct_version": "3.2.0",
     "locales": {
         "en": {
             "title": "VRCT Subtitles & Captions",
