@@ -12,8 +12,8 @@ export const PlayControlContainer = () => {
         currentIsPlayable,
     } = useSubtitles();
 
-    const { useIsEnabledOverlaySmallLog } = useStoreContext();
-    const { currentIsEnabledOverlaySmallLog } = useIsEnabledOverlaySmallLog();
+    const { useVr } = useStoreContext();
+    const { currentIsEnabledOverlaySmallLog } = useVr();
 
     const is_enabled_overlay = currentIsEnabledOverlaySmallLog.data;
 
