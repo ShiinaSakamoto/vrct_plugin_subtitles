@@ -3,10 +3,13 @@ import { useStoreContext } from "@plugin_store";
 import { useSubtitles } from "../_logics/useSubtitles";
 import { secToDayTime } from "../_subtitles_utils"
 import { useEffect } from "react";
+
 export const SubtitlesController = () => {
-    const { useSendTextToOverlay, useIsEnabledOverlaySmallLog } = useStoreContext();
-    const { sendTextToOverlay } = useSendTextToOverlay();
-    const { currentIsEnabledOverlaySmallLog } = useIsEnabledOverlaySmallLog();
+    const { useVr } = useStoreContext();
+    const {
+        sendTextToOverlay,
+        currentIsEnabledOverlaySmallLog,
+    } = useVr();
 
     const {
         currentIsSubtitlePlaying,

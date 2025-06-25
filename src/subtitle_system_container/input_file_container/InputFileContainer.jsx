@@ -13,8 +13,8 @@ export const InputFileContainer = () => {
     } = useSubtitles();
     const inputRef = useRef(null);
 
-    const { useSendTextToOverlay } = useStoreContext();
-    const { sendTextToOverlay } = useSendTextToOverlay();
+    const { useVr } = useStoreContext();
+    const { sendTextToOverlay } = useVr();
 
     // ファイルアップロード時の処理
     const handleFileUpload = (event) => {

@@ -1,7 +1,7 @@
 import { useStore, useStoreContext } from "@plugin_store";
 export const useSubtitles = () => {
-    const { useSendTextToOverlay } = useStoreContext();
-    const { sendTextToOverlay } = useSendTextToOverlay();
+    const { useVr } = useStoreContext();
+    const { sendTextToOverlay } = useVr();
 
     const { currentIsPlayable, updateIsPlayable } = useStore("useStore_IsPlayable");
 
