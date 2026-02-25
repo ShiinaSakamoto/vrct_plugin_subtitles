@@ -1,7 +1,12 @@
+import { useRef, useEffect } from "react";
 import { useStore, useStoreContext } from "@plugin_store";
 export const useSubtitles = () => {
-    const { useVr } = useStoreContext();
+    const {
+        useVr,
+        useMessage,
+    } = useStoreContext();
     const { sendTextToOverlay } = useVr();
+    const { sendMessage } = useMessage();
 
     const { currentIsPlayable, updateIsPlayable } = useStore("useStore_IsPlayable");
 
@@ -12,6 +17,8 @@ export const useSubtitles = () => {
     const { currentIsSubtitlePlaying, updateIsSubtitlePlaying } = useStore("useStore_IsSubtitlePlaying");
     const { currentSubtitlePlaybackMode, updateSubtitlePlaybackMode } = useStore("useStore_SubtitlePlaybackMode");
     const { currentSubtitleAbsoluteTargetTime, updateSubtitleAbsoluteTargetTime } = useStore("useStore_SubtitleAbsoluteTargetTime");
+    const { currentSendToChatbox, updateSendToChatbox } = useStore("useStore_SendToChatbox");
+
     const { currentIsCuesScheduled, updateIsCuesScheduled } = useStore("useStore_IsCuesScheduled");
 
     const { currentCountdownAdjustment, updateCountdownAdjustment } = useStore("useStore_CountdownAdjustment");
@@ -23,6 +30,12 @@ export const useSubtitles = () => {
     // const timersRef = useRef([]);
     // カウントダウンタイマー専用の ref
     const { currentSubtitleCountdownTimerId, updateSubtitleCountdownTimerId, AddSubtitleCountdownTimerId } = useStore("useStore_SubtitleCountdownTimerId");
+
+    const sendToChatboxRef = useRef(currentSendToChatbox.data);
+
+    useEffect(() => {
+        sendToChatboxRef.current = currentSendToChatbox.data;
+    }, [currentSendToChatbox.data]);
 
     // cues のスケジュールを行う（字幕開始時のオフセットは調整後のタイミングに合わせる）
     const scheduleCues = (offset) => {
@@ -37,6 +50,7 @@ export const useSubtitles = () => {
             console.log(`字幕開始 (index: ${cue.index}) send_text:${send_text}`);
             updatePlayingText(send_text);
             sendTextToOverlay(send_text);
+            if (sendToChatboxRef.current) sendMessage(send_text);
         };
 
         // 字幕終了時の処理
@@ -173,6 +187,9 @@ export const useSubtitles = () => {
 
         currentSubtitleAbsoluteTargetTime,
         updateSubtitleAbsoluteTargetTime,
+
+        currentSendToChatbox,
+        updateSendToChatbox,
 
         currentIsCuesScheduled,
         updateIsCuesScheduled,

@@ -10,6 +10,8 @@ export const initStore = (createAtomWithHook) => {
             hour: "23",
             minute: "00",
         }, "SubtitleAbsoluteTargetTime", { is_state_ok: true }).useHook,
+        useStore_SendToChatbox: createAtomWithHook(false, "SendToChatbox", { is_state_ok: true }).useHook,
+
         useStore_IsCuesScheduled: createAtomWithHook(false, "IsCuesScheduled", { is_state_ok: true }).useHook,
         useStore_CountdownAdjustment: createAtomWithHook(0, "CountdownAdjustment", { is_state_ok: true }).useHook,
         useStore_EffectiveCountdown: createAtomWithHook(null, "EffectiveCountdown", { is_state_ok: true }).useHook,
