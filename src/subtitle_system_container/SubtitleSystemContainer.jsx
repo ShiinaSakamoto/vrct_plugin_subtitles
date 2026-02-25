@@ -3,6 +3,7 @@ import { HeaderContainer } from "./header_container/HeaderContainer";
 import { InputFileContainer } from "./input_file_container/InputFileContainer";
 import { ModeSelectorContainer } from "./mode_selector_container/ModeSelectorContainer";
 import { PlayControlContainer } from "./play_control_container/PlayControlContainer";
+import { SettingsContainer } from "./settings_container/SettingsContainer";
 import { CountdownContainer } from "./countdown_container/CountdownContainer";
 import { SubtitlesListContainer } from "./subtitles_list_container/SubtitlesListContainer";
 
@@ -38,6 +39,7 @@ export const SubtitleSystemContainer = () => {
             <InputFileContainer />
             <ModeSelectorContainer />
             <PlayControlContainer />
+            <SettingsContainer />
             <div className={styles.border}></div>
             <CountdownContainer />
             <SubtitlesListContainer />
